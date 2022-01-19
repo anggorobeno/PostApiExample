@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Test BTS</string>
+    <string name="field_blank">Field Can\'t be blank</string>
 </resources>
