@@ -34,9 +34,9 @@ class MainViewModel @Inject constructor(
                 mainRepository.getUsers().let {
                     if (it.isSuccessful) {
                         _users.postValue(Resource.success(it.body()))
-                    } else _users.postValue(Resource.error(it.errorBody().toString(), null))
+                    } else _users.postValue(Resource.error(it.errorBody().toString()))
                 }
-            } else _users.postValue(Resource.error("No internet connection", null))
+            } else _users.postValue(Resource.error("No internet connection"))
         }
     }
 

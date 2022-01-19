@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import com.example.learndaggerhilt.R
 import com.example.learndaggerhilt.data.model.LoginRequest
 import com.example.learndaggerhilt.data.model.RegisterRequest
 import com.example.learndaggerhilt.databinding.ActivityLoginBinding
 import com.example.learndaggerhilt.databinding.ActivityRegisterBinding
+import com.example.learndaggerhilt.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,6 +30,19 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.button.setOnClickListener {
             viewModel.postRegister(request)
+            viewModel.users.observe(this, {
+                when (it.status) {
+                    Status.LOADING -> binding.progressBar.isVisible = true
+                    Status.SUCCESS -> {
+                        binding.progressBar.isVisible = false
+                        Toast.makeText(this, "Login Success", Toast.LENGTH_LONG).show()
+                    }
+                    Status.ERROR -> {
+                        binding.progressBar.isVisible = false
+                        Toast.makeText(this, "${it.message}", Toast.LENGTH_LONG).show()
+                    }
+                }
+            })
         }
 
 
